@@ -1,1 +1,0 @@
-# team-prompter-novel-noctale
