@@ -1,6 +1,12 @@
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
         @csrf
+        
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Buat Akun Baru</h2>
+            <p class="text-sm text-gray-500 mt-2">Bergabunglah dan mulai membaca novel kesukaanmu!</p>
+        </div>
 
         <!-- Name -->
         <div>
@@ -39,14 +45,17 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
+        <div class="mt-8">
+            <x-primary-button class="w-full justify-center py-3 text-base font-semibold tracking-wide">
                 {{ __('Register') }}
             </x-primary-button>
+
+            <p class="text-center text-sm text-gray-600 mt-6">
+                Sudah punya akun? 
+                <a class="text-indigo-600 hover:text-indigo-800 font-bold transition ml-1" href="{{ route('login') }}">
+                    Masuk di sini
+                </a>
+            </p>
         </div>
     </form>
 </x-guest-layout>
