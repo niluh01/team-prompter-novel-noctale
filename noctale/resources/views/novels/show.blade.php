@@ -32,7 +32,7 @@
                     <div class="mb-6 flex flex-col sm:flex-row items-center sm:justify-between gap-4 bg-gray-50 border border-gray-200 p-4 rounded-lg shadow-sm flex-wrap" x-data="{ ratingModal: false }">
                         <div class="flex items-center gap-4 w-full sm:w-auto justify-center sm:justify-start">
                             <div class="whitespace-nowrap">
-                                <span class="text-2xl font-bold text-yellow-500">⭐ {{ number_format($avgRating, 1) }}</span>
+                                <span class="text-2xl font-bold text-yellow-500"><i class="fas fa-star"></i> {{ number_format($avgRating, 1) }}</span>
                                 <span class="text-sm text-gray-500 ml-1 font-medium">({{ $totalReviews }} Penilaian)</span>
                             </div>
                             @auth
@@ -53,7 +53,7 @@
                                 </form>
 
                                 <button onclick="openReportModal('novel', {{ $novel->id }}, '{{ addslashes($novel->title) }}')" class="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold rounded-lg transition shadow-sm flex items-center gap-2 whitespace-nowrap">
-                                    ⚠️ Laporkan Novel
+                                    <i class="fas fa-exclamation-triangle"></i> Laporkan Novel
                                 </button>
                             @else
                                 <a href="{{ route('login') }}" class="px-4 py-2 bg-blue-600 text-white font-bold rounded-lg shadow-sm hover:bg-blue-700 transition whitespace-nowrap">Login untuk Menyimpan</a>
@@ -151,7 +151,7 @@
                         @include('novels.partials.comment', ['comment' => $comment, 'isReply' => false, 'novel' => $novel])
                     @empty
                         <p class="text-center text-gray-500 py-12 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-100 flex flex-col items-center gap-2">
-                             <span class="text-3xl text-gray-300">💬</span>
+                             <span class="text-3xl text-gray-300"><i class="fas fa-comment-dots"></i></span>
                              Belum ada diskusi. Mulai ulasan pertama cerita ini!
                         </p>
                     @endforelse
