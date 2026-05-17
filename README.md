@@ -1,11 +1,10 @@
-## Logo
 <p align="center">
   <img src="https://github.com/user-attachments/assets/8a1fce8b-f8bf-43d8-af42-5758a252bab0" alt="Logo Noctale Banner" width="100%">
 </p>
 
-# Novel Ku
+# Noctale
 
-Novel Ku adalah platform membaca dan menulis novel digital yang dibangun menggunakan framework Laravel. Platform ini memfasilitasi interaksi antara pembaca dan penulis dalam satu wadah yang mudah digunakan, dilengkapi dengan berbagai fitur interaktif dan sistem manajemen konten yang komprehensif.
+Noctale adalah platform membaca dan menulis novel digital yang dibangun menggunakan framework Laravel. Platform ini memfasilitasi interaksi antara pembaca dan penulis dalam satu wadah yang mudah digunakan, dilengkapi dengan berbagai fitur interaktif dan sistem manajemen konten yang komprehensif.
 
 ## Fitur Utama
 
@@ -26,7 +25,7 @@ Novel Ku adalah platform membaca dan menulis novel digital yang dibangun menggun
 
 ### 3. Penulis
 
-- Semua fitur Pembaca, ditambah:
+Semua fitur Pembaca, ditambah:
 - **Manajemen Novel:** Membuat, memperbarui, dan mengelola karya novel sendiri.
 - **Manajemen Bab (Bab):** Tambahkan bab-bab baru, kelola urutan, dan unggah gambar ilustrasi untuk bab.
 - **Statistik Karya:** Pantau jumlah penayangan (views), jumlah interaksi, dan performa dari masing-masing novel.
@@ -43,7 +42,7 @@ Novel Ku adalah platform membaca dan menulis novel digital yang dibangun menggun
 
 - **Backend:** Laravel 12 (PHP 8.2)
 - **Frontend:** Tailwind CSS, Alpine.js, Vite
-- **Basis data:** MySQL / SQLite
+- **Basis data:** MySQL
 - **Autentikasi & Keamanan:** Laravel Breeze
 
 ## Cara Instalasi & Jangkauan Proyek Secara Lokal
@@ -51,13 +50,13 @@ Novel Ku adalah platform membaca dan menulis novel digital yang dibangun menggun
 ### 1. Kloning repository ini
 
 ```bash
-git clone <url-repository-anda>
-cd novel_ku
+git clone https://github.com/niluh01/team-prompter-novel-noctale
+cd noctale
 ```
 
 ### 2. Instal dependensi PHP & Node.js
 
-Pastikan Anda sudah menginstal Composer dan Node.js di komputer Anda.
+Pastikan sudah menginstal Composer dan Node.js.
 
 ```bash
 composer install
@@ -72,7 +71,7 @@ Salin file `.env.example` menjadi `.env`
 cp .env.example .env
 ```
 
-Lalu buka file `.env` dan sesuaikan konfigurasi database Anda:
+Lalu buka file `.env` dan sesuaikan konfigurasi database:
 
 `DB_CONNECTION`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`
 
@@ -118,9 +117,19 @@ Buka browser:
 http://localhost:8000
 ```
 
-## Tim
+## Team
 
-Dipilih oleh Kelompok 13 sebagai proyek pengembangan web.
+Proyek **Web Novel Noctale** dikembangkan oleh **Kelompok 13 Team Prompter** sebagai bagian dari pengembangan aplikasi web novel digital berbasis Laravel. Tim ini berkolaborasi dalam merancang, membangun, dan mengembangkan platform yang interaktif, modern, serta mudah digunakan bagi pembaca maupun penulis.
+
+### Anggota Tim
+
+| Nama | NPM | Peran |
+|------|------|------|
+| Bintang Maulana | 2313020011 | Frontend Developer |
+| Amelia Putri Syahroza | 2313020022 | Backend Developer |
+| Niluh Anggraini | 2313020043 | Project Manager |
+
+Tim berfokus pada pengembangan sistem yang tidak hanya memiliki tampilan modern dan responsif, tetapi juga didukung dengan pengelolaan data serta fitur interaktif yang optimal untuk memberikan pengalaman pengguna yang nyaman dan efisien.
 
 ---
 
