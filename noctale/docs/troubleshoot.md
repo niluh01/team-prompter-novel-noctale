@@ -43,6 +43,6 @@ php artisan storage:link
 
 ---
 
-## 4: Pemeliharaan bagi Tim Developer
-- **Jangan Menghapus Folder `storage`:** Selalu biarkan folder `storage` ada di direktori proyek lokal Anda.
+## 4: Pemeliharaan 
+- **Jangan Menghapus Folder `storage`:** Selalu biarkan folder `storage` ada di direktori proyek lokal.
 - **Pindahkan Folder public/storage Saat Deploy:** Jika melakukan migrasi atau deploy ke server baru, pastikan untuk menghapus folder `public/storage` lama terlebih dahulu sebelum menjalankan `php artisan storage:link` pada lingkungan server baru tersebut.
