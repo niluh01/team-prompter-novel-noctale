@@ -47,14 +47,35 @@
                                         </span>
                                     </div>
                                     <nav class="space-y-1 border-t border-gray-700 pt-4">
-                                        <a href="{{ route('admin.dashboard') }}" class="block px-4 py-3 rounded-lg text-sm transition-all {{ request()->routeIs('admin.dashboard') ? 'bg-red-600 font-bold shadow-md' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">📊 Ringkasan Dasbor</a>
-                                        <a href="{{ route('admin.banners.index') }}" class="block px-4 py-3 rounded-lg text-sm transition-all {{ request()->routeIs('admin.banners.*') ? 'bg-red-600 font-bold shadow-md' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">🖼️ Pengaturan Slider</a>
-                                        <a href="{{ route('admin.users.index') }}" class="block px-4 py-3 rounded-lg text-sm transition-all {{ request()->routeIs('admin.users.*') ? 'bg-red-600 font-bold shadow-md' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">👥 Manajemen User</a>
-                                        <a href="{{ route('admin.novels.index') }}" class="block px-4 py-3 rounded-lg text-sm transition-all {{ request()->routeIs('admin.novels.*') ? 'bg-red-600 font-bold shadow-md' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">📚 Approval Karya</a>
-                                        <a href="{{ route('admin.genres.index') }}" class="block px-4 py-3 rounded-lg text-sm transition-all {{ request()->routeIs('admin.genres.*') ? 'bg-red-600 font-bold shadow-md' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">🏷️ Kategori Genre</a>
-                                        <a href="{{ route('admin.reports.index') }}" class="block px-4 py-3 rounded-lg text-sm transition-all {{ request()->routeIs('admin.reports.*') ? 'bg-red-600 font-bold shadow-md' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">🚨 Laporan Tiket</a>
+                                        <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition-all {{ request()->routeIs('admin.dashboard') ? 'bg-red-600 font-bold shadow-md' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                                            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                                            <span>Ringkasan Dasbor</span>
+                                        </a>
+                                        <a href="{{ route('admin.banners.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition-all {{ request()->routeIs('admin.banners.*') ? 'bg-red-600 font-bold shadow-md' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                                            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                            <span>Pengaturan Slider</span>
+                                        </a>
+                                        <a href="{{ route('admin.users.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition-all {{ request()->routeIs('admin.users.*') ? 'bg-red-600 font-bold shadow-md' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                                            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                                            <span>Manajemen User</span>
+                                        </a>
+                                        <a href="{{ route('admin.novels.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition-all {{ request()->routeIs('admin.novels.*') ? 'bg-red-600 font-bold shadow-md' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                                            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                                            <span>Approval Karya</span>
+                                        </a>
+                                        <a href="{{ route('admin.genres.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition-all {{ request()->routeIs('admin.genres.*') ? 'bg-red-600 font-bold shadow-md' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                                            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                            <span>Kategori Genre</span>
+                                        </a>
+                                        <a href="{{ route('admin.reports.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition-all {{ request()->routeIs('admin.reports.*') ? 'bg-red-600 font-bold shadow-md' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
+                                            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                            <span>Laporan Tiket</span>
+                                        </a>
                                         <div class="pt-4 mt-2 border-t border-gray-700">
-                                            <a href="{{ route('home') }}" class="block px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-700">🏠 Kembali ke Publik</a>
+                                            <a href="{{ route('home') }}" class="flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-700">
+                                                <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                                                <span>Kembali ke Publik</span>
+                                            </a>
                                         </div>
                                     </nav>
                                 </div>
@@ -118,8 +139,11 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
                 <h3 class="text-xl font-bold text-gray-900 mb-2 flex items-center gap-2">
-                    <span class="text-red-500">🚨</span> <span id="reportModalTitle">Laporkan Konten</span>
-                </h3>
+                                    <svg class="w-5 h-5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                    </svg>
+                                    <span id="reportModalTitle">Laporkan Konten</span>
+                                </h3>
                 <p id="reportModalDesc" class="text-xs text-gray-500 mb-4 bg-red-50 border border-red-100 p-2 rounded leading-relaxed italic">Laporan Anda akan ditinjau oleh Admin untuk menjaga komunitas tetap aman.</p>
                 
                 <form action="{{ route('report.store') }}" method="POST">

@@ -117,6 +117,14 @@ Buka browser:
 http://localhost:8000
 ```
 
+## Dokumentasi & Aset Pendukung
+
+Untuk informasi lebih lanjut mengenai pengembangan, desain, dan pemecahan masalah, silakan merujuk ke dokumen berikut di dalam folder `docs/`:
+
+*   [**Dokumentasi Desain UI/UX & Figma**](docs/design.md): Tautan Figma aktif untuk desain antarmuka, slide presentasi kelompok, dan pratinjau gambar mockup.
+*   [**Panduan Troubleshooting Gambar Broken & Storage**](docs/troubleshoot.md): Solusi lengkap untuk mengatasi gambar sampul/banner yang error 404 pada local development.
+*   [**Panduan Git Push & GitHub Issues**](docs/git_push_guide.md): Langkah-langkah melakukan Git push serta daftar template GitHub Issues lengkap dengan Merge/PR description.
+
 ## Team
 
 Proyek **Web Novel Noctale** dikembangkan oleh **Kelompok 13 Team Prompter** sebagai bagian dari pengembangan aplikasi web novel digital berbasis Laravel. Tim ini berkolaborasi dalam merancang, membangun, dan mengembangkan platform yang interaktif, modern, serta mudah digunakan bagi pembaca maupun penulis.

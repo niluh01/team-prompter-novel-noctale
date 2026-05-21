@@ -21,14 +21,14 @@
                     <div class="flex flex-wrap justify-center gap-3 items-center text-sm font-medium mb-6 mt-4">
                         <span class="bg-gray-800/80 px-4 py-1.5 rounded-full border border-gray-700 text-gray-300"><i class="fas fa-calendar-alt text-gray-500 mr-1"></i> Bergabung {{ $user->created_at->format('M Y') }}</span>
                         @if($user->role === 'admin')
-                            <span class="bg-red-500/10 text-red-400 px-4 py-1.5 rounded-full border border-red-500/20 font-bold shadow-sm shadow-red-500/10">🛡️ Administrator</span>
+                            <span class="bg-red-500/10 text-red-400 px-4 py-1.5 rounded-full border border-red-500/20 font-bold shadow-sm shadow-red-500/10"><i class="fas fa-shield-alt mr-1.5"></i> Administrator</span>
                         @else
-                            <span class="bg-blue-500/10 text-blue-400 px-4 py-1.5 rounded-full border border-blue-500/20 font-bold shadow-sm shadow-blue-500/10">✍️ Penulis Konten</span>
+                            <span class="bg-blue-500/10 text-blue-400 px-4 py-1.5 rounded-full border border-blue-500/20 font-bold shadow-sm shadow-blue-500/10"><i class="fas fa-pen mr-1.5"></i> Penulis Konten</span>
                         @endif
 
                         @if(Auth::check() && Auth::id() !== $user->id)
                             <button onclick="openReportModal('user', {{ $user->id }}, '{{ addslashes($user->name) }}')" class="bg-red-500/10 text-red-400 px-4 py-1.5 rounded-full border border-red-500/20 font-bold hover:bg-red-500/20 transition">
-                                🚩 Laporkan Pengguna
+                                <i class="fas fa-flag mr-1.5"></i> Laporkan Pengguna
                             </button>
                         @endif
                     </div>

@@ -25,8 +25,11 @@
                     <a href="{{ route('writer.novels.index', ['tab' => 'draft']) }}" class="pb-2 text-xs sm:text-sm font-bold whitespace-nowrap {{ $tab === 'draft' ? 'border-b-2 border-gray-600 text-gray-800' : 'text-gray-500 hover:text-gray-700' }}">
                         Draft Disembunyikan ({{ $countDraft ?? 0 }})
                     </a>
-                    <a href="{{ route('writer.novels.index', ['tab' => 'rejected']) }}" class="pb-2 text-xs sm:text-sm font-bold whitespace-nowrap {{ $tab === 'rejected' ? 'border-b-2 border-red-600 text-red-600' : 'text-gray-500 hover:text-gray-700' }}">
-                        ⚠️ Perlu Revisi ({{ $countRejected ?? 0 }})
+                    <a href="{{ route('writer.novels.index', ['tab' => 'rejected']) }}" class="pb-2 text-xs sm:text-sm font-bold whitespace-nowrap flex items-center gap-1 {{ $tab === 'rejected' ? 'border-b-2 border-red-600 text-red-600' : 'text-gray-500 hover:text-gray-700' }}">
+                        <svg class="w-4 h-4 text-red-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                        <span>Perlu Revisi ({{ $countRejected ?? 0 }})</span>
                     </a>
                 </div>
             </div>
@@ -87,7 +90,9 @@
                         @empty
                             <tr>
                                 <td colspan="5" class="p-8 text-center text-gray-400">
-                                    <p class="text-3xl mb-2">📖</p>
+                                    <svg class="w-12 h-12 mx-auto text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                    </svg>
                                     <p class="text-sm">Belum ada karya novel. Silakan buat yang baru.</p>
                                 </td>
                             </tr>

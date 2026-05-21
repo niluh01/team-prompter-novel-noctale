@@ -102,7 +102,7 @@
                          'bg-[#FBF6EE] border border-[#EBE0C5]': theme === 'sepia'
                      }
                  ]">
-                <div :style="`font-size: ${fontSize}px; line-height: 1.8;`" class="prose prose-slate max-w-none dark:prose-invert relative">
+                <div :style="`font-size: ${fontSize}px; line-height: 1.8;`" class="prose prose-slate max-w-none dark:prose-invert relative break-words whitespace-pre-wrap">
                     @auth
                         {!! $chapter->content !!}
                     @else
@@ -175,7 +175,10 @@
             <div class="mt-20 border-t pt-10" :class="theme === 'dark' ? 'border-gray-800' : 'border-gray-200'">
                 <div class="flex items-center justify-between mb-8">
                     <h3 class="text-2xl font-black flex items-center gap-3">
-                        💬 Diskusi Bab
+                        <svg class="w-6 h-6 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                        <span>Diskusi Bab</span>
                         <span class="text-sm bg-blue-100 text-blue-600 px-3 py-1 rounded-full">{{ $totalComments }}</span>
                     </h3>
                 </div>
@@ -208,8 +211,10 @@
                     @forelse($comments as $comment)
                         @include('novels.partials.comment', ['comment' => $comment, 'isReply' => false, 'novel' => $novel, 'chapter' => $chapter])
                     @empty
-                        <div class="text-center py-16 bg-gray-500/5 rounded-3xl border-2 border-dashed border-gray-500/10">
-                            <span class="text-4xl mb-4 block">😶</span>
+                        <div class="text-center py-16 bg-gray-500/5 rounded-3xl border-2 border-dashed border-gray-500/10 flex flex-col items-center">
+                            <svg class="w-12 h-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
                             <p class="text-gray-500 font-medium">Belum ada komentar di bab ini. Jadilah yang pertama!</p>
                         </div>
                     @endforelse

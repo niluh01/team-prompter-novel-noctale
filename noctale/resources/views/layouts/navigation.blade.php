@@ -37,7 +37,12 @@
                                 <div class="p-6 flex gap-8">
                                     <!-- Sisi Kiri: Menu Utama (Sidebar) -->
                                     <div class="w-[200px] flex-shrink-0">
-                                        <div class="text-[10px] font-black text-blue-600 uppercase tracking-widest px-3 py-2 mb-4 bg-blue-50 rounded-lg inline-block">📌 Utama</div>
+                                        <div class="text-[10px] font-black text-blue-600 uppercase tracking-widest px-3 py-1.5 mb-4 bg-blue-50 rounded-lg flex items-center gap-1.5 w-max">
+                                            <svg class="w-3 h-3 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
+                                            </svg>
+                                            <span>Utama</span>
+                                        </div>
                                         <div class="space-y-1">
                                             <a href="{{ route('novels.index', ['sort' => 'popular']) }}" class="group flex items-center gap-3 p-3 rounded-2xl hover:bg-gray-50 transition duration-300">
                                                 <svg class="w-6 h-6 group-hover:scale-110 transition-transform text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 7 10c0-2 .5-3 2.5-4.5 0 0-1 4 2 5.5s3.5-1.5 3.5-1.5c-1.5 2.5-1 4.5.5 5.5 1.5.5 2.5-2 2.5-2a4.5 4.5 0 01-.343 6.157z"></path></svg>
@@ -64,7 +69,12 @@
                                     </div>
                                     
                                     <div class="flex-1 border-l border-gray-100 pl-8">
-                                        <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest px-3 py-2 mb-4 inline-block">🎭 Kategori Genre</div>
+                                        <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest py-2 mb-4 flex items-center gap-1.5">
+                                            <svg class="w-3.5 h-3.5 text-gray-450 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 7h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                            </svg>
+                                            <span>Kategori Genre</span>
+                                        </div>
                                         <div class="gap-x-6 gap-y-2 max-h-[350px] overflow-x-auto overflow-y-hidden pb-4 pr-2 custom-scrollbar" style="display: grid; grid-template-rows: repeat(5, minmax(0, 1fr)); grid-auto-flow: column;">
                                             @forelse($navGenres as $g)
                                                 <a href="{{ route('novels.index', ['genre' => $g->id]) }}" 
