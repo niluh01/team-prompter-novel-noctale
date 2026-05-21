@@ -13,7 +13,14 @@ class ExploreController extends Controller
         $sort = $request->query('sort', 'all'); // latest, popular, all
         $search = $request->query('search', '');
 
-        $query = Novel::where('publish_status', 'published')->with(['author']);
+        $publishedChapterCount = ['chapters' => function($query) {
+            $query->published();
+        }];
+
+        $query = Novel::where('publish_status', 'published')
+            ->with(['author'])
+            ->withCount($publishedChapterCount)
+            ->withAvg('reviews', 'rating');
 
         if ($search) {
             $query->where('title', 'like', '%' . $search . '%');

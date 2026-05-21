@@ -17,6 +17,7 @@ class HomeController extends Controller
         $featuredNovels = Novel::where('publish_status', 'published')
             ->with(['author'])
             ->withCount($publishedChapterCount)
+            ->withAvg('reviews', 'rating')
             ->orderBy('views', 'desc')
             ->take(3)
             ->get();
@@ -24,6 +25,7 @@ class HomeController extends Controller
         $popularNovels = Novel::where('publish_status', 'published')
             ->with(['author'])
             ->withCount($publishedChapterCount)
+            ->withAvg('reviews', 'rating')
             ->orderBy('views', 'desc')
             ->take(7)
             ->get();
@@ -31,6 +33,7 @@ class HomeController extends Controller
         $latestNovels = Novel::where('publish_status', 'published')
             ->with(['author'])
             ->withCount($publishedChapterCount)
+            ->withAvg('reviews', 'rating')
             ->orderBy('created_at', 'desc')
             ->take(7)
             ->get();
@@ -38,6 +41,7 @@ class HomeController extends Controller
         $allNovels = Novel::where('publish_status', 'published')
             ->with(['author'])
             ->withCount($publishedChapterCount)
+            ->withAvg('reviews', 'rating')
             ->orderBy('title', 'asc')
             ->paginate(12);
 

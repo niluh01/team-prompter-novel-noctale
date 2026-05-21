@@ -12,7 +12,17 @@ class BookmarkController extends Controller
 {
     public function index()
     {
-        $bookmarks = Auth::user()->bookmarks()->with('novel.author')->paginate(12);
+        $publishedChapterCount = ['chapters' => function($query) {
+            $query->published();
+        }];
+
+        $bookmarks = Auth::user()->bookmarks()
+            ->with(['novel' => function ($q) use ($publishedChapterCount) {
+                $q->with(['author'])
+                  ->withCount($publishedChapterCount)
+                  ->withAvg('reviews', 'rating');
+            }])
+            ->paginate(12);
         return view('user.bookmarks', compact('bookmarks'));
     }
 

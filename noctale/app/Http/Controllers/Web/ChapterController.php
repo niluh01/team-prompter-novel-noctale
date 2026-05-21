@@ -84,6 +84,11 @@ class ChapterController extends Controller
 
         $chapter->increment('views');
         
+        // Sinkronisasi views novel dengan total views seluruh babnya
+        $novel->update([
+            'views' => $novel->chapters()->sum('views')
+        ]);
+        
         if (Auth::check()) {
             \App\Models\ReadingHistory::updateOrCreate(
                 ['user_id' => Auth::id(), 'novel_id' => $novel->id],
