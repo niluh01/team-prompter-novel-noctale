@@ -39,8 +39,10 @@
                         <div class="p-4 border border-red-200 bg-red-50 text-red-600 text-sm rounded-lg">Novel telah dihapus oleh penulis.</div>
                         @endif
                     @empty
-                        <div class="col-span-full py-12 text-center text-gray-500 border-2 border-dashed border-gray-200 rounded-xl">
-                            <span class="text-4xl block mb-2">📚</span>
+                        <div class="col-span-full py-12 text-center text-gray-500 border-2 border-dashed border-gray-200 rounded-xl flex flex-col items-center">
+                            <svg class="w-12 h-12 text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
                             <p>Anda belum memiliki riwayat membaca apapun.</p>
                             <a href="{{ route('home') }}" class="text-blue-600 hover:underline font-semibold mt-2 inline-block">Mulai jelajahi novel sekarang</a>
                         </div>

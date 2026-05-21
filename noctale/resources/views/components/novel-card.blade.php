@@ -1,5 +1,9 @@
 @props(['novel'])
 
+@php
+    $avgRating = isset($novel->reviews_avg_rating) ? $novel->reviews_avg_rating : ($novel->reviews()->avg('rating') ?? 0);
+@endphp
+
 <a href="{{ route('novels.show', $novel) }}" class="group block relative rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 bg-white border border-gray-100">
     <div class="relative aspect-[2/3] bg-gray-100 overflow-hidden">
         @if($novel->cover)
@@ -26,9 +30,16 @@
             </div>
             
             <div class="flex items-center justify-between mt-1">
-                <div class="flex items-center gap-1 text-[10px] font-bold text-gray-400">
-                    <svg class="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                    {{ number_format($novel->views) }}
+                <div class="flex items-center gap-1.5">
+                    <div class="flex items-center gap-0.5 text-[10px] font-bold text-gray-400">
+                        <svg class="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        {{ number_format($novel->views) }}
+                    </div>
+                    @if($avgRating > 0)
+                        <div class="flex items-center gap-0.5 text-[10px] font-bold text-yellow-500" title="Rating">
+                            <span class="text-xs">★</span>{{ number_format($avgRating, 1) }}
+                        </div>
+                    @endif
                 </div>
                 
                 @if($novel->genres && $novel->genres->count() > 0)

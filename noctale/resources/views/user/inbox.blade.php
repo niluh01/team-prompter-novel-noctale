@@ -1,7 +1,23 @@
 <x-app-layout>
     <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6 border-b pb-2">Kotak Masuk (Notifikasi)</h2>
+            <div class="flex justify-between items-center mb-6 border-b pb-2">
+                <h2 class="text-2xl font-bold text-gray-900">Kotak Masuk (Notifikasi)</h2>
+                @if(\App\Models\Notification::where('user_id', Auth::id())->where('is_read', false)->exists())
+                    <form action="{{ route('inbox.readAll') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="text-xs px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded shadow-sm transition">
+                            Tandai Semua Telah Dibaca
+                        </button>
+                    </form>
+                @endif
+            </div>
+
+            @if(session('success'))
+                <div class="mb-4 p-4 bg-green-50 border-l-4 border-green-500 text-green-700 rounded shadow-sm text-sm font-semibold">
+                    {{ session('success') }}
+                </div>
+            @endif
             
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="flex flex-col">
