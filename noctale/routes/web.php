@@ -57,6 +57,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     // Inbox Notifications
     Route::get('/inbox', [NotificationController::class, 'index'])->name('inbox.index');
+    Route::post('/inbox/read-all', [NotificationController::class, 'readAll'])->name('inbox.readAll');
     Route::post('/inbox/{id}/read', [NotificationController::class, 'read'])->name('inbox.read');
     
     // Bookmarks & History

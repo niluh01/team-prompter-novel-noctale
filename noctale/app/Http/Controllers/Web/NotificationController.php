@@ -23,4 +23,13 @@ class NotificationController extends Controller
         $notification->update(['is_read' => true]);
         return back();
     }
+
+    public function readAll()
+    {
+        Notification::where('user_id', Auth::id())
+            ->where('is_read', false)
+            ->update(['is_read' => true]);
+            
+        return back()->with('success', 'Semua pemberitahuan telah ditandai sebagai dibaca.');
+    }
 }

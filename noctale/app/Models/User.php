@@ -34,4 +34,9 @@ class User extends Authenticatable
     public function reports() { return $this->hasMany(Report::class); }
     public function readingHistories() { return $this->hasMany(ReadingHistory::class); }
     public function notifications() { return $this->hasMany(Notification::class); }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
 }

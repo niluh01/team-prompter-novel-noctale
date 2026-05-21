@@ -1,99 +1,224 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Novel;
-use App\Models\Notification;
+use App\Models\Genre;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class NovelController extends Controller
 {
+    /**
+     * Show the public novel details.
+     */
+    public function show(Novel $novel)
+    {
+        $isAuthor = Auth::id() === $novel->user_id;
+        $isLive = $novel->publish_status === 'published';
+        
+        if (!$isLive && !$isAuthor) {
+            abort(404);
+        }
+        
+        // Load relationships conditionally. If author, load all chapters. If not, only published/scheduled ones that are due.
+        if ($isAuthor) {
+            $novel->load(['author', 'genres', 'chapters' => function ($q) {
+                $q->orderBy('chapter_number', 'asc');
+            }]);
+        } else {
+            $novel->load(['author', 'genres', 'chapters' => function ($q) {
+                $q->published()->orderBy('chapter_number', 'asc');
+            }]);
+        }
+        
+        return view('novels.show', compact('novel'));
+    }
+
+    /**
+     * Show the writer's list of novels.
+     */
     public function index(Request $request)
     {
-        $pendingNovels = Novel::where('publish_status', 'pending')
-            ->with(['author', 'genres', 'chapters'])
-            ->withCount('chapters')
+        $user = Auth::user();
+        $tab = $request->query('tab', 'published');
+        
+        if (!in_array($tab, ['published', 'pending', 'draft', 'rejected'])) {
+            $tab = 'published';
+        }
+        
+        $query = $user->novels()->withCount('chapters');
+        
+        $countPublished = $user->novels()->where('publish_status', 'published')->count();
+        $countPending = $user->novels()->where('publish_status', 'pending')->count();
+        $countDraft = $user->novels()->where('publish_status', 'draft')->count();
+        $countRejected = $user->novels()->where('publish_status', 'rejected')->count();
+        
+        $novels = $query->where('publish_status', $tab)
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(10)
+            ->appends($request->query());
             
-        $query = Novel::where('publish_status', 'published')
-            ->with(['author', 'genres'])
-            ->withCount('chapters');
-
-        if ($request->filled('search')) {
-            $query->where(function($q) use ($request) {
-                $q->where('title', 'like', '%' . $request->search . '%')
-                  ->orWhereHas('author', function($aq) use ($request) {
-                      $aq->where('name', 'like', '%' . $request->search . '%');
-                  });
-            });
-        }
-
-        if ($request->filled('genre')) {
-            $query->whereHas('genres', function($gq) use ($request) {
-                $gq->where('genres.id', $request->genre);
-            });
-        }
-
-        $publishedNovels = $query->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
-        $genres = \App\Models\Genre::orderBy('name')->get();
-        
-        return view('admin.novels.index', compact('pendingNovels', 'publishedNovels', 'genres'));
+        return view('writer.novels.index', compact('novels', 'tab', 'countPublished', 'countPending', 'countDraft', 'countRejected'));
     }
-    
-    public function update(Request $request, Novel $novel)
-    {
-        $action = $request->input('action');
-        
-        if ($action === 'approve') {
-            $novel->update([
-                'publish_status' => 'published',
-                'rejection_reason' => null
-            ]);
-            
-            Notification::create([
-                'user_id' => $novel->user_id,
-                'title' => 'Novel Diterima!',
-                'message' => 'Selamat, karya Anda yang berjudul "' . $novel->title . '" telah lolos moderasi Admin dan resmi didistribusikan di beranda utamal.',
-                'is_read' => false,
-            ]);
-            
-            return back()->with('success', 'Novel disetujui untuk rilis publik!');
-        }
-        
-        if ($action === 'reject') {
-            $reason = $request->input('rejection_reason', 'Konten tidak memenuhi standar komunitas kami.');
-            
-            $novel->update([
-                'publish_status' => 'rejected',
-                'rejection_reason' => $reason
-            ]);
-            
-            Notification::create([
-                'user_id' => $novel->user_id,
-                'title' => 'Publikasi Ditolak',
-                'message' => 'Maaf, pengajuan rilis novel "' . $novel->title . '" ditolak oleh Admin dengan alasan: ' . $reason,
-                'is_read' => false,
-            ]);
-            
-            return back()->with('error', 'Novel ditolak dengan alasan: ' . $reason);
-        }
 
-        return back();
-    }
-    public function destroy(Request $request, Novel $novel)
+    /**
+     * Show the create novel form.
+     */
+    public function create()
     {
-        $reason = $request->input('reason', 'Karya Anda telah dihapus oleh Admin karena melanggar ketentuan komunitas kami.');
-        
-        Notification::create([
-            'user_id' => $novel->user_id,
-            'title' => '⚠️ Pemberitahuan: Karya Dihapus',
-            'message' => 'Pemberitahuan resmi: Karya Anda yang berjudul "' . $novel->title . '" telah dihapus dari sistem oleh Admin dengan alasan: ' . $reason,
-            'is_read' => false,
+        $genres = Genre::orderBy('name', 'asc')->get();
+        return view('writer.novels.create', compact('genres'));
+    }
+
+    /**
+     * Store a new novel.
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'cover' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'status' => 'required|in:ongoing,completed,hiatus',
+            'publish_status' => 'required|in:draft,published',
+            'genres' => 'nullable|array',
+            'genres.*' => 'exists:genres,id',
         ]);
 
+        $coverPath = null;
+        if ($request->hasFile('cover')) {
+            $coverPath = $request->file('cover')->store('covers', 'public');
+        }
+
+        // If author wants to publish it immediately, set status to pending for admin moderation.
+        $publishStatus = $request->publish_status;
+        if ($publishStatus === 'published') {
+            $publishStatus = 'pending';
+        }
+
+        $novel = Auth::user()->novels()->create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'cover' => $coverPath,
+            'status' => $request->status,
+            'publish_status' => $publishStatus,
+            'views' => 0,
+        ]);
+
+        if ($request->genres) {
+            $novel->genres()->attach($request->genres);
+        }
+
+        $message = $publishStatus === 'pending' 
+            ? 'Novel berhasil diajukan dan sedang menunggu persetujuan Admin!' 
+            : 'Novel berhasil disimpan sebagai draf!';
+
+        return redirect()->route('writer.novels.index', ['tab' => $publishStatus])->with('success', $message);
+    }
+
+    /**
+     * Show the edit novel form.
+     */
+    public function edit(Novel $novel)
+    {
+        if ($novel->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $genres = Genre::orderBy('name', 'asc')->get();
+        $novel->load('genres');
+
+        return view('writer.novels.edit', compact('novel', 'genres'));
+    }
+
+    /**
+     * Update the novel.
+     */
+    public function update(Request $request, Novel $novel)
+    {
+        if ($novel->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'cover' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'status' => 'required|in:ongoing,completed,hiatus',
+            'publish_status' => 'required|in:draft,published',
+            'genres' => 'nullable|array',
+            'genres.*' => 'exists:genres,id',
+        ]);
+
+        $coverPath = $novel->cover;
+        if ($request->hasFile('cover')) {
+            if ($coverPath) {
+                Storage::disk('public')->delete($coverPath);
+            }
+            $coverPath = $request->file('cover')->store('covers', 'public');
+        }
+
+        $publishStatus = $request->publish_status;
+        $rejectionReason = $novel->rejection_reason;
+        
+        if ($publishStatus === 'published') {
+            // If the novel is currently a draft or rejected, transition it to pending
+            if (in_array($novel->publish_status, ['draft', 'rejected'])) {
+                $publishStatus = 'pending';
+                $rejectionReason = null; // Clear old rejection reason
+            } else {
+                // If it is already pending or published, keep its current status
+                $publishStatus = $novel->publish_status;
+            }
+        }
+
+        $novel->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'cover' => $coverPath,
+            'status' => $request->status,
+            'publish_status' => $publishStatus,
+            'rejection_reason' => $rejectionReason,
+        ]);
+
+        if ($request->genres) {
+            $novel->genres()->sync($request->genres);
+        } else {
+            $novel->genres()->detach();
+        }
+
+        $message = 'Novel berhasil diperbarui!';
+        return redirect()->route('writer.novels.index', ['tab' => $publishStatus])->with('success', $message);
+    }
+
+    /**
+     * Delete the novel and its dependencies.
+     */
+    public function destroy(Novel $novel)
+    {
+        if ($novel->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        // Delete cover image from storage
+        if ($novel->cover) {
+            Storage::disk('public')->delete($novel->cover);
+        }
+
+        // Delete all chapter images
+        foreach ($novel->chapters as $chapter) {
+            if ($chapter->image) {
+                Storage::disk('public')->delete($chapter->image);
+            }
+        }
+
+        // Detach genres and delete the novel (cascade deletes comments/reviews/chapters in db or Eloquent handles it)
+        $novel->genres()->detach();
         $novel->delete();
-        return back()->with('success', 'Karya tersebut telah dimusnahkan dan penulis telah dikirimi nota pemberitahuan.');
+
+        return redirect()->route('writer.novels.index')->with('success', 'Novel beserta semua bab di dalamnya berhasil dihapus!');
     }
 }
