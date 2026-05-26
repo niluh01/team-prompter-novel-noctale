@@ -19,6 +19,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Force HTTPS in production
+        if (config('app.env') === 'production') {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
+
         // Auto-publish scheduled chapters that are due
         try {
             if (\Illuminate\Support\Facades\Schema::hasTable('chapters')) {
