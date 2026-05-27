@@ -66,7 +66,7 @@
                                 <svg class="w-4 h-4 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                                 Isi Bab Novel
                             </label>
-                            <button type="button" @click="previewContent = setPreview(); showPreview = true" class="text-xs bg-purple-50 text-purple-700 font-bold py-1.5 px-4 rounded-full hover:bg-purple-100 transition-all flex items-center border border-purple-100">
+                            <button type="button" @click="previewContent = (window.setPreview ? window.setPreview() : ''); showPreview = true" class="text-xs bg-purple-50 text-purple-700 font-bold py-1.5 px-4 rounded-full hover:bg-purple-100 transition-all flex items-center border border-purple-100">
                                 <svg class="w-3 h-3 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                                 Pratinjau (Preview)
                             </button>
@@ -92,30 +92,37 @@
         </div>
 
         <!-- Preview Modal -->
-        <div x-show="showPreview" class="fixed inset-0 z-50 overflow-y-auto" style="display: none; z-index: 9999;">
-            <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-                <div @click="showPreview = false" class="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-75 backdrop-blur-sm"></div>
-                
-                <div class="inline-block w-full max-w-4xl my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-2xl rounded-3xl">
-                    <div class="flex items-center justify-between px-8 py-4 border-b border-gray-100 bg-gray-50">
-                        <div class="flex items-center gap-3">
-                            <div class="w-2 h-2 rounded-full bg-blue-500"></div>
-                            <h3 class="text-sm font-bold text-gray-500 uppercase tracking-widest">Pratinjau Hasil Edit</h3>
-                        </div>
-                        <button @click="showPreview = false" class="text-gray-400 hover:text-gray-600 transition-colors">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                        </button>
-                    </div>
+        <div x-show="showPreview" class="fixed inset-0 z-50" style="display: none; z-index: 9999;">
+            <!-- Backdrop -->
+            <div @click="showPreview = false" class="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-75 backdrop-blur-sm"></div>
+            
+            <!-- Modal Wrapper -->
+            <div class="fixed inset-0 z-10 overflow-y-auto">
+                <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0" @click.self="showPreview = false">
+                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
                     
-                    <div class="px-8 py-10 md:px-12 md:py-14 max-h-[75vh] overflow-y-auto bg-white">
-                        <div class="prose prose-lg md:prose-xl max-w-3xl mx-auto prose-slate prose-headings:font-bold prose-p:leading-relaxed prose-img:rounded-2xl" x-html="previewContent">
+                    <!-- Modal Card -->
+                    <div class="relative z-20 inline-block w-full max-w-4xl my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-2xl rounded-3xl">
+                        <div class="flex items-center justify-between px-8 py-4 border-b border-gray-100 bg-gray-50">
+                            <div class="flex items-center gap-3">
+                                <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                                <h3 class="text-sm font-bold text-gray-500 uppercase tracking-widest">Pratinjau Hasil Edit</h3>
+                            </div>
+                            <button @click="showPreview = false" class="text-gray-400 hover:text-gray-600 transition-colors">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
                         </div>
-                    </div>
+                        
+                        <div class="px-8 py-10 md:px-12 md:py-14 max-h-[75vh] overflow-y-auto bg-white">
+                            <div class="prose prose-lg md:prose-xl max-w-3xl mx-auto prose-slate prose-headings:font-bold prose-p:leading-relaxed prose-img:rounded-2xl" x-html="previewContent">
+                            </div>
+                        </div>
 
-                    <div class="px-8 py-6 bg-gray-50 flex justify-center">
-                        <button @click="showPreview = false" class="px-10 py-3 bg-gray-800 text-white font-bold rounded-xl hover:bg-gray-900 transition-all shadow-xl">
-                            Tutup Pratinjau
-                        </button>
+                        <div class="px-8 py-6 bg-gray-50 flex justify-center">
+                            <button @click="showPreview = false" class="px-10 py-3 bg-gray-800 text-white font-bold rounded-xl hover:bg-gray-900 transition-all shadow-xl">
+                                Tutup Pratinjau
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -128,81 +135,100 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Register custom fonts
-            var Font = Quill.import('formats/font');
-            Font.whitelist = ['serif', 'sans-serif', 'monospace', 'playfair', 'georgia', 'roboto'];
-            Quill.register(Font, true);
+            try {
+                // Register custom fonts
+                var Font = Quill.import('formats/font');
+                Font.whitelist = ['serif', 'sans-serif', 'monospace', 'playfair', 'georgia', 'roboto'];
+                Quill.register(Font, true);
 
-            // Configure Toolbar
-            var toolbarOptions = [
-                [{ 'header': [1, 2, 3, false] }],
-                [{ 'font': Font.whitelist }],
-                [{ 'size': ['small', false, 'large', 'huge'] }],
-                ['bold', 'italic', 'underline', 'strike'],
-                [{ 'color': [] }, { 'background': [] }],
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                [{ 'align': [] }],
-                ['link', 'image'],
-                ['clean']
-            ];
+                // Configure Toolbar
+                var toolbarOptions = [
+                    [{ 'header': [1, 2, 3, false] }],
+                    [{ 'font': Font.whitelist }],
+                    [{ 'size': ['small', false, 'large', 'huge'] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'color': [] }, { 'background': [] }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'align': [] }],
+                    ['link', 'image'],
+                    ['clean']
+                ];
 
-            var quill = new Quill('#editor-container', {
-                modules: {
-                    toolbar: toolbarOptions
-                },
-                placeholder: 'Mulailah merangkai kata-kata ajaib Anda...',
-                theme: 'snow'
-            });
+                var quill = new Quill('#editor-container', {
+                    modules: {
+                        toolbar: toolbarOptions
+                    },
+                    placeholder: 'Mulailah merangkai kata-kata ajaib Anda...',
+                    theme: 'snow'
+                });
 
-            // Set initial content
-            var hiddenInput = document.getElementById('content_area');
-            if (hiddenInput.value) {
-                quill.root.innerHTML = hiddenInput.value;
-            }
+                // Set initial content
+                var hiddenInput = document.getElementById('content_area');
+                if (hiddenInput && hiddenInput.value) {
+                    quill.root.innerHTML = hiddenInput.value;
+                }
 
-            // Sync with hidden input on change
-            quill.on('text-change', function() {
-                hiddenInput.value = quill.root.innerHTML;
-            });
+                // Sync with hidden input on change
+                quill.on('text-change', function() {
+                    if (hiddenInput) {
+                        hiddenInput.value = quill.root.innerHTML;
+                    }
+                });
 
-            // Custom Image Handler
-            var toolbar = quill.getModule('toolbar');
-            toolbar.addHandler('image', function() {
-                var input = document.createElement('input');
-                input.setAttribute('type', 'file');
-                input.setAttribute('accept', 'image/*');
-                input.click();
+                // Custom Image Handler
+                var toolbar = quill.getModule('toolbar');
+                if (toolbar) {
+                    toolbar.addHandler('image', function() {
+                        var input = document.createElement('input');
+                        input.setAttribute('type', 'file');
+                        input.setAttribute('accept', 'image/*');
+                        input.click();
 
-                input.onchange = function() {
-                    var file = input.files[0];
-                    var formData = new FormData();
-                    formData.append('file', file);
+                        input.onchange = function() {
+                            var file = input.files[0];
+                            var formData = new FormData();
+                            formData.append('file', file);
 
-                    fetch('{{ route("writer.chapters.upload_image") }}', {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(result => {
-                        if (result.url) {
-                            var range = quill.getSelection();
-                            quill.insertEmbed(range.index, 'image', result.url);
-                        } else {
-                            alert('Gagal mengunggah gambar');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('Terjadi kesalahan saat mengunggah');
+                            fetch('{{ route("writer.chapters.upload_image") }}', {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(result => {
+                                if (result.url) {
+                                    var range = quill.getSelection();
+                                    quill.insertEmbed(range.index, 'image', result.url);
+                                } else {
+                                    alert('Gagal mengunggah gambar');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                alert('Terjadi kesalahan saat mengunggah');
+                            });
+                        };
                     });
-                };
-            });
+                }
 
-            window.quillEditor = quill;
+                window.quillEditor = quill;
+            } catch (e) {
+                console.error('Quill initialization failed: ', e);
+            }
         });
+
+        window.setPreview = function() {
+            if (window.quillEditor) {
+                let content = window.quillEditor.root.innerHTML;
+                if (!content || content.trim() === '' || content === '<p><br></p>') {
+                    return '<p class="text-gray-400 italic text-center py-8">Naskah masih kosong...</p>';
+                }
+                return content;
+            }
+            return '<p class="text-gray-400 italic text-center py-8">Naskah masih kosong...</p>';
+        };
 
         function toggleScheduledAt() {
             const status = document.getElementById('publish_status').value;
@@ -233,13 +259,6 @@
                 };
                 reader.readAsText(input.files[0]);
             }
-        }
-
-        function setPreview() {
-            if (window.quillEditor) {
-                return window.quillEditor.root.innerHTML;
-            }
-            return '';
         }
     </script>
     <style>
