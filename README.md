@@ -123,7 +123,6 @@ Untuk informasi lebih lanjut mengenai pengembangan, desain, dan pemecahan masala
 
 *   [**Dokumentasi Desain UI/UX & Figma**](docs/design.md): Tautan Figma aktif untuk desain antarmuka, slide presentasi kelompok, dan pratinjau gambar mockup.
 *   [**Panduan Troubleshooting Gambar Broken & Storage**](docs/troubleshoot.md): Solusi lengkap untuk mengatasi gambar sampul/banner yang error 404 pada local development.
-*   [**Panduan Git Push & GitHub Issues**](docs/git_push_guide.md): Langkah-langkah melakukan Git push serta daftar template GitHub Issues lengkap dengan Merge/PR description.
 
 ## Team
 
